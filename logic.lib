@@ -1,0 +1,34 @@
+.subckt 74LS86 A B Y
+R1 A 0 100Meg
+R2 B 0 100Meg
+B1 Y 0 V={((V(A)>2.5)+(V(B)>2.5)==1)*5}
+R3 Y 0 100Meg
+.ends
+
+.subckt 74LS86_B A B Y
+R1 A 0 100Meg
+R2 B 0 100Meg
+B1 Y 0 V={((V(A)>2.5)+(V(B)>2.5)==1)*5}
+R3 Y 0 100Meg
+.ends
+
+.subckt 74LS08 A B Y
+R1 A 0 100Meg
+R2 B 0 100Meg
+B1 Y 0 V={(V(A)>2.5)*(V(B)>2.5)*5}
+R3 Y 0 100Meg
+.ends
+
+.subckt 74LS08_B A B Y
+R1 A 0 100Meg
+R2 B 0 100Meg
+B1 Y 0 V={(V(A)>2.5)*(V(B)>2.5)*5}
+R3 Y 0 100Meg
+.ends
+
+.subckt 74LS32 A B Y
+R1 A 0 100Meg
+R2 B 0 100Meg
+B1 Y 0 V={((V(A)>2.5)+(V(B)>2.5)>0)*5}
+R3 Y 0 100Meg
+.ends

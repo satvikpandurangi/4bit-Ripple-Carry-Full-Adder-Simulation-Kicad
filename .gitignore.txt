@@ -1,0 +1,14 @@
+# KiCad backups and auto-generated files
+*-bak
+*.bck
+*.kicad_prl
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*-save.pro
+*-save.kicad_pcb
+fp-info-cache
+*.tmp
+
+# SPICE simulation logs
+*.raw
+*.log
