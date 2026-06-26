@@ -1,25 +1,43 @@
+<div align="center">
+
 # 4-Bit Ripple Carry Adder: KiCad 74LS Simulation
 
-## Overview
+### Cascaded binary arithmetic and carry propagation using discrete 74LS-series logic gates
 
-This repository contains a KiCad schematic and SPICE simulation of a 4-bit Ripple Carry Adder built from discrete 74LS-series logic gates. It demonstrates cascaded binary arithmetic and carry propagation by chaining four Full Adder stages and verifying the resulting sum and carry-out logic through transient SPICE analysis.
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat&logo=github)](https://github.com/satvikpandurangi/4bit-Ripple-Carry-Full-Adder-Simulation-Kicad)
+[![KiCad](https://img.shields.io/badge/KiCad-EDA-314CB0?style=flat&logo=kicad&logoColor=white)](https://www.kicad.org/)
+[![ngspice](https://img.shields.io/badge/Simulator-ngspice-blue?style=flat)](https://ngspice.sourceforge.io/)
 
-## Features
+</div>
 
-- 4-bit Ripple Carry Adder built from discrete 74LS86, 74LS08, and 74LS32 logic gates
-- Manually bound SPICE behavioral models (`logic.lib`) for accurate gate-level simulation
-- Configurable DC voltage sources to test arbitrary 4-bit input combinations
+---
+
+## 📖 Overview
+
+This repository contains a fully routed, simulated 4-bit Ripple Carry Adder built from discrete 74LS-series logic gates in KiCad. It demonstrates cascaded Full Adder circuits performing binary arithmetic, with sum and carry-out logic verified through transient SPICE analysis.
+
+## 🎯 Objectives
+
+- Design a 4-bit Ripple Carry Adder by cascading four discrete Full Adder stages
+- Bind manual SPICE models to standard 74-series symbols for gate-level simulation
+- Verify sum and carry-propagation logic against binary addition truth tables
+
+## ✨ Features
+
+- 4-bit Ripple Carry Adder built from 74LS86, 74LS08, and 74LS32 gates
+- Manually bound SPICE models (`logic.lib`) enabling accurate gate-level simulation
+- Configurable DC sources to test arbitrary 4-bit input combinations
 - Verified test case (5 + 3 = 8) with full node-voltage analysis
 
-## Circuit Description
+## ⚙️ Circuit Overview
 
-The adder cascades four Full Adder blocks, each accepting Bit A, Bit B, and a Carry-In (Cin), and producing a Sum bit and Carry-Out (Cout):
+Four Full Adder blocks are cascaded, each accepting Bit A, Bit B, and a Carry-In (Cin), and producing a Sum bit and Carry-Out (Cout):
 
-- **Sum Logic:** Sum = A ⊕ B ⊕ Cin, implemented with cascaded XOR gates.
-- **Carry Logic:** Cout = (A · B) + (Cin · (A ⊕ B)), implemented with AND and OR gates.
-- **Ripple Effect:** The Carry-Out of each stage feeds directly into the Carry-In of the next, from Adder 0 (LSB) through Adder 3 (MSB). Because higher-order bits cannot resolve until the carry has propagated through every preceding stage, this architecture is called a Ripple Carry Adder.
+- **Sum Logic:** Sum = A ⊕ B ⊕ Cin
+- **Carry Logic:** Cout = (A · B) + (Cin · (A ⊕ B))
+- **Ripple Effect:** Each stage's Carry-Out feeds the next stage's Carry-In, from Adder 0 (LSB) through Adder 3 (MSB) — higher-order bits cannot resolve until the carry has "rippled" through every preceding stage.
 
-## Components
+## 🧩 Components Used
 
 | Type | Component | Function |
 |------|-----------|----------|
@@ -29,23 +47,42 @@ The adder cascades four Full Adder blocks, each accepting Bit A, Bit B, and a Ca
 | Passive | 10 kΩ pull-down resistors | Stabilize logic states |
 | Source | Multiple DC voltage sources | Constant Logic 1 (5 V) / Logic 0 (0 V) inputs |
 
-> **EDA Note:** KiCad's standard 74-series symbols lack native SPICE math models, so the gates in this project are manually bound to behavioral models in `logic.lib`. All "Unit B" sub-gates are reassigned to "Unit A" to avoid SPICE indexing errors on multi-unit chips.
+## 🛠️ Software & Simulation
 
-## Simulation Setup
+Built and simulated in **KiCad EDA** — the Schematic Editor lays out the 74-series gates and routes the cascaded adder network, while the integrated **ngspice** simulator runs Transient Analysis to resolve output logic states.
 
-1. Adder 0 (LSB) is wired first, handling bits A0/B0 with Cin grounded (Logic 0).
-2. The Full Adder block is replicated three more times (Adder 1–3), with each stage's Carry-Out routed into the next stage's Carry-In.
-3. Global VCC/GND power nets are assigned to power the hidden pins of the 74-series symbols.
-4. Each logic gate's Simulation Model is manually bound to `logic.lib`.
-5. DC voltage sources represent the binary input words: 5 V for Logic 1, 0 V for Logic 0.
-6. Transient analysis is run as `.tran 0.1m 5m`, and node voltages are extracted for S0–S3 and Cout.
+> ⚠️ **Note:** Standard KiCad 74-series symbols lack native SPICE math models, so this project manually binds them to a `logic.lib` behavioral file, with "Unit B" sub-gates reassigned to "Unit A" to avoid SPICE indexing errors.
 
-**Example Test Case — 5 + 3 = 8:**
-- Input Word A (A₃A₂A₁A₀): 0101 (Decimal 5) → 0 V, 5 V, 0 V, 5 V
-- Input Word B (B₃B₂B₁B₀): 0011 (Decimal 3) → 0 V, 0 V, 5 V, 5 V
-- Initial Carry-In (Cin): 0 V
+**Requirements:** KiCad v6.0+ with the integrated `ngspice` simulator (included by default).
 
-## Results
+## 📂 Repository Structure
+
+```
+4bit-Ripple-Carry-Full-Adder-Simulation-Kicad
+├── 4Bit_Adder.kicad_pro       # Main KiCad project file
+├── 4Bit_Adder.kicad_sch       # Schematic and SPICE directives
+├── 4Bit_Adder.kicad_pcb       # PCB layout file
+├── logic.lib                  # Behavioral SPICE models for 74LS gates
+├── logic.txt                  # Logic model reference notes
+├── 4bit_Adder_Schematic.png   # Circuit schematic
+├── 4bit_Adder_Output.png      # Simulation waveform/output
+└── README.md
+```
+
+## 🚀 How to Open & Run
+
+1. Clone the repository (ensure `logic.lib` is included, or the simulation will fail):
+   ```bash
+   git clone https://github.com/satvikpandurangi/4bit-Ripple-Carry-Full-Adder-Simulation-Kicad.git
+   ```
+2. Open `4Bit_Adder.kicad_pro` in the KiCad Project Manager and open the Schematic Editor.
+3. Modify the DC voltage sources (A0–A3, B0–B3) to set a binary test case.
+4. Go to **Inspect > Simulator** and click **Run/Stop Simulation**.
+5. Probe the S0–S3 and Cout nets and compare against the binary addition truth table.
+
+## 📊 Simulation Results
+
+**Test Case: 5 + 3 = 8** — Input A = 0101, Input B = 0011, Cin = 0
 
 | Stage | Node / Net | Parameter | Expected Logic | Simulated Voltage | Status |
 |-------|------------|-----------|------------------|---------------------|--------|
@@ -58,41 +95,14 @@ The adder cascades four Full Adder blocks, each accepting Bit A, Bit B, and a Ca
 | Adder 3 (MSB) | S₃ | Sum Bit 3 | 1 | 5.0 V | PASS |
 | | Cₒᵤₜ | Final Carry Out | 0 | 0.0 V | PASS |
 
-**Final Output Binary:** 01000 (Decimal 8)
+**Final Output Binary:** 01000 (Decimal 8) — the carry propagated correctly through all four stages.
 
-The carry bit successfully generated at Adder 0 and propagated through the entire 4-bit network, correctly resolving the MSB (S₃) and producing a mathematically accurate result for 5 + 3 = 8.
-
-## Repository Structure
-
-```
-.
-├── 4Bit_Adder.kicad_pro       # Main KiCad project file
-├── 4Bit_Adder.kicad_sch       # Schematic and SPICE directives
-├── 4Bit_Adder.kicad_pcb       # PCB layout file
-├── logic.lib                  # Behavioral SPICE models for 74LS gates
-├── logic.txt                  # Logic model reference notes
-├── 4bit_Adder_Schematic.png   # Circuit schematic
-├── 4bit_Adder_Output.png      # Simulation waveform/output
-└── README.md
-```
-
-## How to Run
-
-1. Clone this repository, ensuring `logic.lib` is included (the simulation will fail without it):
-   ```bash
-   git clone https://github.com/satvikpandurangi/4bit-Ripple-Carry-Full-Adder-Simulation-Kicad.git
-   ```
-2. Open `4Bit_Adder.kicad_pro` in the KiCad Project Manager.
-3. Open the Schematic Editor to view the circuit layout.
-4. Modify the DC voltage sources (A0–A3, B0–B3) to set your desired binary test case.
-5. Go to **Inspect > Simulator** and click **Run/Stop Simulation**.
-6. Probe the S0–S3 and Cout nets and compare against the binary addition truth table.
-
-## Screenshots
+## 📸 Screenshots
 
 **Schematic:**
 
 ![Schematic](4bit_Adder_Schematic.png)
+
 
 **Simulation Output:**
 
